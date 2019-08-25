@@ -1,0 +1,19 @@
+server:
+   port: 443
+   ssl:
+      key-store: classpath:keystore.p12
+      key-store-password: 12345678
+      key-store-type: PKCS12
+      key-alias: tomcat   
+spring:
+   application:  
+      name: zuulserver
+zuul:
+    prefix: /api/
+    routes:
+        service-1:
+            path: /service-1/**
+            url: http://172.18.0.23:8303/
+        service-2:
+            path: /service-2/**
+            url: http://172.18.0.24:8304/

@@ -1,0 +1,15 @@
+spring:
+    application:
+        name: service-1
+
+server:
+    port: 8303
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    service-url:
+      defaultZone: http://172.18.0.22:8302/eureka
+  instance:
+    hostname: 172.18.0.22
