@@ -1,0 +1,21 @@
+build:
+
+cd ~/microservice/apigatway/ && mvn package docker:build && \
+cd ~/microservice/eureka/ && mvn package docker:build && \
+cd ~/microservice/service-1/ && mvn package docker:build && \
+cd ~/microservice/service-2/ && mvn package docker:build && \
+echo y | docker image prune
+
+docker network create --subnet=172.18.0.0/16 palashnet
+run:
+docker run -d --name dapigatway --net palashnet --ip 172.18.0.21 -p 8323:8323 spring-boot-tutorialspoint/apigatway && \
+docker run -d --name deureka --net palashnet --ip 172.18.0.22 -p 8302:8302 spring-boot-tutorialspoint/eureka.server && \
+docker run -d --name dservice-1 --net palashnet --ip 172.18.0.23 spring-boot-tutorialspoint/service-1 && \
+docker run -d --name dservice-2 --net palashnet --ip 172.18.0.24 spring-boot-tutorialspoint/service-2 && \
+
+
+Kill:
+docker kill dapigatway && docker rm dapigatway && \
+docker kill deureka  && docker rm deureka && \
+docker kill dservice-1 && docker rm dservice-1 && \
+docker kill dservice-2 && docker rm dservice-2
